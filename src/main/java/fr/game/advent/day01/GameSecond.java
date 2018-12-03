@@ -5,12 +5,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import fr.game.utils.FileUtils;
+import fr.game.utils.AbstractGame;
 
-public class GameSecond {
+public class GameSecond extends AbstractGame<Integer, Integer> {
 	
-	private static final String INPUT_FILENAME = "fr/game/advent/day01/input-day01-1";
+	private static final String INPUT_FILENAME = "day01/input-day01-1";
 	
+	public GameSecond() {
+		super(INPUT_FILENAME, Integer::new);
+	}
+
 	/* Version avec trace en console 
 	public Integer play(List<Integer> listOfChanges) {
 		Set<Integer> reachedFrequencies = new HashSet<>();
@@ -40,14 +44,9 @@ public class GameSecond {
 	}
 	
 	
-	public Integer play(String inputFilename) {
-		return play( FileUtils.getListFromFile(inputFilename, Integer::new) );
-	}
-	
-	
 	public static void main(String[] args) {
 		GameSecond gameFirst = new GameSecond();
-		System.out.println("Résultat : " + gameFirst.play(INPUT_FILENAME));
+		System.out.println("Résultat : " + gameFirst.play());
 	}
 
 }

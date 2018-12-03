@@ -3,11 +3,17 @@ package fr.game.advent.day02;
 import java.util.List;
 import java.util.function.Function;
 
-import fr.game.utils.FileUtils;
+import fr.game.utils.AbstractGame;
 
-public class GameSecond {
+public class GameSecond extends AbstractGame<String, String> {
 	
-	private static final String INPUT_FILENAME = "fr/game/advent/day02/input-day02-1";
+	private static final String INPUT_FILENAME = "day02/input-day02-1";
+	
+	
+	public GameSecond() {
+		super(INPUT_FILENAME, Function.identity());
+	}
+	
 	
 	private boolean differByExactlyOneCharacter(String id1, String id2) {
 		int distance = 0;
@@ -44,16 +50,11 @@ public class GameSecond {
 		}
 		return null; 
 	}
-	
-	
-	public String play(String inputFilename) {
-		return play( FileUtils.getListFromFile(inputFilename, Function.identity()));
-	}
-	
+
 	
 	public static void main(String[] args) {
 		GameSecond gameFirst = new GameSecond();
-		System.out.println("Résultat : " + gameFirst.play(INPUT_FILENAME));
+		System.out.println("Résultat : " + gameFirst.play());
 	}
 
 }

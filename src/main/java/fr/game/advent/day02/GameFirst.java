@@ -5,11 +5,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import fr.game.utils.FileUtils;
+import fr.game.utils.AbstractGame;
 
-public class GameFirst {
+public class GameFirst extends AbstractGame<String, Integer> {
 	
-	private static final String INPUT_FILENAME = "fr/game/advent/day02/input-day02-1";
+	private static final String INPUT_FILENAME = "day02/input-day02-1";
+	
+	
+	public GameFirst() {
+		super(INPUT_FILENAME, Function.identity());
+	}
+
 	
 	private Map<Character, Integer> countLettersInId(String id) {
 		Map<Character, Integer> occurencyOfLetters = new HashMap<>();
@@ -22,6 +28,7 @@ public class GameFirst {
 		}
 		return occurencyOfLetters;
 	}
+	
 
 	public Integer play(List<String> listOfId) {
 		int numberOfIdContainingExactlyTwoOfAnyLetter = 0;
@@ -34,13 +41,10 @@ public class GameFirst {
 		return numberOfIdContainingExactlyTwoOfAnyLetter * numberOfIdContainingExactlyThreeOfAnyLetter;
 	}
 	
-	public Integer play(String inputFilename) {
-		return play( FileUtils.getListFromFile(inputFilename, Function.identity()));
-	}
 	
 	public static void main(String[] args) {
 		GameFirst gameFirst = new GameFirst();
-		System.out.println("Résultat : " + gameFirst.play(INPUT_FILENAME));
+		System.out.println("Résultat : " + gameFirst.play());
 	}
 
 }

@@ -4,14 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fr.game.utils.FileUtils;
+import fr.game.utils.AbstractGame;
 
-public class GameFirst {
+public class GameFirst extends AbstractGame<Claim, Long> {
 	
-	private static final String INPUT_FILENAME = "fr/game/advent/day03/input-day03-1";
+	private static final String INPUT_FILENAME = "day03/input-day03-1";
+	
+	public GameFirst() {
+		super(INPUT_FILENAME, Claim::fromString);
+	}
+
 	
 	private Map<Point, Integer> coveredPoints;
-
+	
 	private Long countMultiCoveredPoints() {
 		return coveredPoints.values().stream()
 							.filter(n -> n > 1)
@@ -42,13 +47,9 @@ public class GameFirst {
 		return countMultiCoveredPoints();
 	}
 	
-	public Long play(String inputFilename) {
-		return play( FileUtils.getListFromFile(inputFilename, Claim::fromString));
-	}
-	
 	public static void main(String[] args) {
 		GameFirst gameFirst = new GameFirst();
-		System.out.println("Résultat : " + gameFirst.play(INPUT_FILENAME));
+		System.out.println("Résultat : " + gameFirst.play());
 	}
 
 }

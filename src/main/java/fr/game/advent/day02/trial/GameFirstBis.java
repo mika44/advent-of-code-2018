@@ -6,17 +6,24 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import fr.game.utils.FileUtils;
+import fr.game.utils.AbstractGame;
 
-public class GameFirstBis {
+public class GameFirstBis extends AbstractGame<String, Long> {
 	
-	private static final String INPUT_FILENAME = "fr/game/advent/day02/input-day02-1";
+	private static final String INPUT_FILENAME = "day02/input-day02-1";
 	
+	
+	public GameFirstBis() {
+		super(INPUT_FILENAME, Function.identity());
+	}
+
+		
 	private Map<String, Long> countLettersInId(String id) {
 		return Arrays.stream(id.split(""))
 					.collect( Collectors.groupingBy(s -> s, Collectors.counting()) );
 	}
 
+	
 	public Long play(List<String> listOfId) {
 		CountNumberOfId cnoi = 
 							listOfId.stream()
@@ -28,13 +35,10 @@ public class GameFirstBis {
 		return cnoi.numberOfIdContainingExactlyTwoOfAnyLetter * cnoi.numberOfIdContainingExactlyThreeOfAnyLetter;
 	}
 	
-	public Long play(String inputFilename) {
-		return play( FileUtils.getListFromFile(inputFilename, Function.identity()));
-	}
 	
 	public static void main(String[] args) {
 		GameFirstBis gameFirst = new GameFirstBis();
-		System.out.println("Résultat : " + gameFirst.play(INPUT_FILENAME));
+		System.out.println("Résultat : " + gameFirst.play());
 	}
 
 }

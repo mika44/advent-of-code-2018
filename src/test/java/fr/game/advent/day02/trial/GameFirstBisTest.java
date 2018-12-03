@@ -7,8 +7,6 @@ import org.junit.Test;
 
 public class GameFirstBisTest {
 	
-	private static final String INPUT_FILENAME = "fr/game/advent/day02/input-day02-1";
-	
 	private GameFirstBis gameFirstBis = new GameFirstBis();
 
 	@Test
@@ -18,7 +16,7 @@ public class GameFirstBisTest {
 	
 	@Test
 	public void testGame() {
-		Assert.assertEquals(new Long(7936L), gameFirstBis.play(INPUT_FILENAME));
+		Assert.assertEquals(new Long(7936L), gameFirstBis.play());
 	}
 
 }
