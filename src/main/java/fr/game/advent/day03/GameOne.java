@@ -6,11 +6,11 @@ import java.util.Map;
 
 import fr.game.utils.AbstractGame;
 
-public class GameFirst extends AbstractGame<Claim, Long> {
+public class GameOne extends AbstractGame<Claim, Long> {
 	
 	private static final String INPUT_FILENAME = "day03/input-day03-1";
 	
-	public GameFirst() {
+	public GameOne() {
 		super(INPUT_FILENAME, Claim::fromString);
 	}
 
@@ -46,10 +46,4 @@ public class GameFirst extends AbstractGame<Claim, Long> {
 		}
 		return countMultiCoveredPoints();
 	}
-	
-	public static void main(String[] args) {
-		GameFirst gameFirst = new GameFirst();
-		System.out.println("Résultat : " + gameFirst.play());
-	}
-
 }

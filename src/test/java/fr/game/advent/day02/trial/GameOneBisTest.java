@@ -5,9 +5,9 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GameFirstBisTest {
+public class GameOneBisTest {
 	
-	private GameFirstBis gameFirstBis = new GameFirstBis();
+	private GameOneBis gameFirstBis = new GameOneBis();
 
 	@Test
 	public void testExemple1() {

@@ -5,12 +5,12 @@ import java.util.function.Function;
 
 import fr.game.utils.AbstractGame;
 
-public class GameSecond extends AbstractGame<String, String> {
+public class GameTwo extends AbstractGame<String, String> {
 	
 	private static final String INPUT_FILENAME = "day02/input-day02-1";
 	
 	
-	public GameSecond() {
+	public GameTwo() {
 		super(INPUT_FILENAME, Function.identity());
 	}
 	
@@ -50,11 +50,4 @@ public class GameSecond extends AbstractGame<String, String> {
 		}
 		return null; 
 	}
-
-	
-	public static void main(String[] args) {
-		GameSecond gameFirst = new GameSecond();
-		System.out.println("Résultat : " + gameFirst.play());
-	}
-
 }

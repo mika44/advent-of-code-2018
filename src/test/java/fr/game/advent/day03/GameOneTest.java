@@ -5,9 +5,9 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GameFirstTest {
+public class GameOneTest {
 	
-	private GameFirst gameFirst = new GameFirst();
+	private GameOne gameFirst = new GameOne();
 
 	@Test
 	public void testExemple1() {
@@ -15,5 +15,10 @@ public class GameFirstTest {
 																	Claim.fromString("#1 @ 1,3: 4x4"), 
 																	Claim.fromString("#2 @ 3,1: 4x4"), 
 																	Claim.fromString("#3 @ 5,5: 2x2"))));
+	}
+	
+	@Test
+	public void testGame() {
+		Assert.assertEquals(new Long(101781L), gameFirst.play());
 	}
 }

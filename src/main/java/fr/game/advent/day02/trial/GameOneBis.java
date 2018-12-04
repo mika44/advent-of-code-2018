@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 import fr.game.utils.AbstractGame;
 
-public class GameFirstBis extends AbstractGame<String, Long> {
+public class GameOneBis extends AbstractGame<String, Long> {
 	
 	private static final String INPUT_FILENAME = "day02/input-day02-1";
 	
 	
-	public GameFirstBis() {
+	public GameOneBis() {
 		super(INPUT_FILENAME, Function.identity());
 	}
 
@@ -34,11 +34,4 @@ public class GameFirstBis extends AbstractGame<String, Long> {
 
 		return cnoi.numberOfIdContainingExactlyTwoOfAnyLetter * cnoi.numberOfIdContainingExactlyThreeOfAnyLetter;
 	}
-	
-	
-	public static void main(String[] args) {
-		GameFirstBis gameFirst = new GameFirstBis();
-		System.out.println("Résultat : " + gameFirst.play());
-	}
-
 }
