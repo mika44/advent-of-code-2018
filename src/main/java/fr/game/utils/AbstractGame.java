@@ -5,10 +5,10 @@ import java.util.function.Function;
 
 public abstract class AbstractGame<I, R> implements Game<I, R> {
 	
-	private final static String BASE_DIRECTORY = "fr/game/advent/";
+	protected final static String BASE_DIRECTORY = "fr/game/advent/";
 	
-	private String filename;
-	private Function<String, I> mapper;
+	protected String filename;
+	protected Function<String, I> mapper;
 	
 	public AbstractGame(String filename, Function<String, I> mapper) {
 		this.filename = filename;

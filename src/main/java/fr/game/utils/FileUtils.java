@@ -23,5 +23,17 @@ public class FileUtils {
 		}
 	}	
 
+	public static <T> List<T> getOrderedListFromFile(String filename, Function<String, T> mapper) {
+		try {
+			return Files.lines(Paths.get(new ClassPathResource(filename).getURI()))
+			    .sorted()
+				.map(mapper)
+				.collect(Collectors.toList());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+	}	
+
 }
 
