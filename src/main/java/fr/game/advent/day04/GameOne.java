@@ -10,11 +10,18 @@ public class GameOne extends AbstractGame<Record, Long> {
 	
 	private static final String INPUT_FILENAME = "day04/input-day04-1";
 	
+	/**
+	 * On utilise le constructeur qui ordonne les lignes du fichier avant de les mapper.
+	 * Le mapper transforme les lignes en Record. Ce mapper utilise un attribut interne pour garder en mémoire l'identifiant du garde mappé à la ligne précédente.
+	 */
 	public GameOne() {
-		super(FileUtils::getOrderedListFromFile, INPUT_FILENAME, RecordBuilder.getInstance()::mapRecordFromStringAndLastGuardId);
+		super(FileUtils::getOrderedListFromFile, INPUT_FILENAME, RecordBuilder.getInstance()::mapRecord);
 	}
 
-	
+	/**
+	 * Le garde le plus assoupi.
+	 * Une simple recherche de max.
+	 */
 	private String getMostAsleepGuard(Map<String, MidnightHourAsleepRecord> asleepRecordsSumByGuardId) {
 		Long max = -1L;
 		String guardIdMax = null;
@@ -28,16 +35,31 @@ public class GameOne extends AbstractGame<Record, Long> {
 		return guardIdMax;
 	}
 	
+	/**
+	 * A partir de l'enregistrement cumulatif (cf. méthode resolve plus bas),
+	 * on cherche le garde qui est resté assoupi le plus longtemps en nombre de minutes cumulées.
+	 * Puis on cherche pour ce garde la minute où il s'est le plus souvent assoupi.
+	 * Et on retourne le produit des 2.
+	 */
 	public Long resolve(Map<String, MidnightHourAsleepRecord> asleepRecordsSumByGuardId) {
 		String guardIdMostAsleep = getMostAsleepGuard(asleepRecordsSumByGuardId);
 		int minuteMostAsleep = asleepRecordsSumByGuardId.get(guardIdMostAsleep).getMostAsleepMinute();
 		return new Long(guardIdMostAsleep.substring(1)) * minuteMostAsleep;
 	}
 	
+	/**
+	 * Les MidnightHourAsleepRecord sont sommés pour un même garde.
+	 * On obtient un enregistrement cumulatif par minute du nombre de fois où le garde était assoupi.  
+	 */
 	public Long resolve(List<MidnightHourAsleepRecord> asleepRecords) {
 		return resolve( MidnightHourAsleepRecordsSum.buildAsleepRecordsSumByGuardId(asleepRecords) );
 	}
 	
+	/**
+	 * La liste de Record est transformée en liste de MidnightHourAsleepRecord 
+	 * en fusionnant tous les records se rapportant à un même garde et un même jour.
+	 * (correspondant à la vue minute dans l'énoncé)
+	 */
 	@Override
 	public Long play(List<Record> listRecords) {
 		return resolve( MidnightHourAsleepRecord.buildMidnightHourAsleepRecords(listRecords) );

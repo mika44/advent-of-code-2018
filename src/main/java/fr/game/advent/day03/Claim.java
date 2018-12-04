@@ -1,5 +1,14 @@
 package fr.game.advent.day03;
 
+/**
+ * Modélisation d'un Claim (cf. énoncé).
+ * Un identifiant, 
+ * des distances par rapport au point supérieur gauche de la fabric,
+ * une largeur et une hauteur.
+ * 
+ * La seule méthode non générée dans cette classe est fromString qui sert de mapper lors de la lecture du fichier d'input.
+ * Elle transforme une chaîne en claim...
+ */
 public class Claim {
 	private String id;
 	private int inchesFromLeft;

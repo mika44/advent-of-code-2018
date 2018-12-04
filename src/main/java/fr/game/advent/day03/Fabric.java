@@ -4,6 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Une fabric modélise ici l'ensemble des points couverts par au moins un Claim.
+ * 
+ * On garde les informations sur ces points dans une map dont les clés sont les points de la fabric couvert par au moins un claim.
+ * Les valeurs stockées dans la map pour un point correspond au nombre de claim qui couvrent ce point.
+ * 
+ * On construit une fabric à partir d'une liste de Claims (getInstance).
+ * Un fois la fabric construite, on peut :
+ * - compter les points couverts par plus d'un claim (ceux dont la valeur associée dans la map est supérieure strictement à 1)
+ * - tester si un claim est disjoint des autres (tous les points couverts par le claim ont une valeur associée de 1)
+ *
+ */
 public class Fabric {
 	
 	private Map<Point, Integer> coveredPoints;

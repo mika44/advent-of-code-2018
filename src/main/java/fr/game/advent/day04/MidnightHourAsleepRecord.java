@@ -39,8 +39,11 @@ public class MidnightHourAsleepRecord {
 		return LocalDateTime.of(getDay(), LocalTime.of(01, 00));
 	}
 	
-	
-	public void fillAsleepArray(LocalDateTime ldtBegin, LocalDateTime ldtEnd, long value) {
+	/**
+	 * Cette méthode remplit la vue par minute entre deux timestamp.
+	 * On tronque sur la période de 00:00 à 00:59 car les inputs dépassent parfois.
+	 */
+	private void fillAsleepArray(LocalDateTime ldtBegin, LocalDateTime ldtEnd, long value) {
 		LocalDateTime start = ldtBegin.isBefore(getDayMidnightBegin()) 	? getDayMidnightBegin() : ldtBegin;
 		LocalDateTime end 	= ldtEnd.isAfter(getDayMidnightEnd()) 		? getDayMidnightEnd() 	: ldtEnd;
 		for (LocalDateTime l = start; l.isBefore(end); l = l.plusMinutes(1)) {
@@ -55,10 +58,17 @@ public class MidnightHourAsleepRecord {
 		
 	}
 
+	/**
+	 * Le total des minutes assoupies.
+	 */
 	public Long getAsleepMinutesCount() {
 		return Arrays.stream(asleepArray).mapToLong(l -> l).sum();
 	}
 
+	/**
+	 * La minute la plus assoupie ;-)
+	 * Une simple recherche de max.
+	 */
 	public int getMostAsleepMinute() {
 		Long max = -1L;
 		int minuteMax = 0;
@@ -76,7 +86,10 @@ public class MidnightHourAsleepRecord {
 		return String.format("AsleepRecord [guardId=%s, day=%s, asleepArray=%s]", guardId, day,	Arrays.toString(asleepArray));
 	}	
 	
-	
+	/**
+	 * A partir d'une liste de record, on fabrique une liste de vues sur la période de minuit à une heure.
+	 * Les dates de début et de fin peuvent être hors période.
+	 */
 	public static List<MidnightHourAsleepRecord> buildMidnightHourAsleepRecords(List<Record> listRecords) {
 		List<MidnightHourAsleepRecord> asleepRecords = new ArrayList<>();
 		

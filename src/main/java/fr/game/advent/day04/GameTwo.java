@@ -11,7 +11,7 @@ public class GameTwo extends AbstractGame<Record, Long> {
 	private static final String INPUT_FILENAME = "day04/input-day04-1";
 	
 	public GameTwo() {
-		super(FileUtils::getOrderedListFromFile, INPUT_FILENAME, RecordBuilder.getInstance()::mapRecordFromStringAndLastGuardId);
+		super(FileUtils::getOrderedListFromFile, INPUT_FILENAME, RecordBuilder.getInstance()::mapRecord);
 	}
 
 

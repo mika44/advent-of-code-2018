@@ -20,7 +20,11 @@ public class RecordBuilder {
 		return instance;
 	}
 
-	public Record mapRecordFromStringAndLastGuardId(String stringRecord) {
+	/**
+	 * Ce mapper utilise une variable lastGuardId pour conserver d'un mappage à l'autre l'id du garde mappé lors de l'appel précédantà cette méthode.
+	 * C'est nécessaire puisque le numéro du garde est implicite sur la plupart des lignes en input.
+	 */
+	public Record mapRecord(String stringRecord) {
 		LocalDateTime timestamp = LocalDateTime.parse(stringRecord.substring(1, 17), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 		String guardId = lastGuardId;
 		if (stringRecord.contains("#")) {
