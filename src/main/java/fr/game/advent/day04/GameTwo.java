@@ -15,15 +15,18 @@ public class GameTwo extends AbstractGame<Record, Long> {
 	}
 
 
-	private Long getMostAsleepMinuteAndGuard(Map<String, MidnightHourAsleepRecord> asleepRecordsSumByGuardId) {
+	/**
+	 * Toujours une recherche de max.
+	 */
+	private Long getMostAsleepMinuteAndGuard(Map<String, MidnightHourRecordsSumByGuard> asleepRecordsSumByGuardId) {
 		Long max = -1L;
 		int minuteMax = -1;
 		String guardIdMax = null;
 		for (String guardId : asleepRecordsSumByGuardId.keySet()) {
-			MidnightHourAsleepRecord currentAsleepRecordSum = asleepRecordsSumByGuardId.get(guardId);
-			int currentMinuteMax = currentAsleepRecordSum.getMostAsleepMinute();
-			if (currentAsleepRecordSum.getAsleepArray()[currentMinuteMax] > max) {
-				max = currentAsleepRecordSum.getAsleepArray()[currentMinuteMax];
+			MidnightHourRecordsSumByGuard currentRecord = asleepRecordsSumByGuardId.get(guardId);
+			int currentMinuteMax = currentRecord.getMostAsleepMinute();
+			if (currentRecord.getAsleepArray()[currentMinuteMax] > max) {
+				max = currentRecord.getAsleepArray()[currentMinuteMax];
 				minuteMax = currentMinuteMax;
 				guardIdMax = guardId;
 			}
@@ -32,18 +35,18 @@ public class GameTwo extends AbstractGame<Record, Long> {
 	}
 	
 	
-	public Long resolve(Map<String, MidnightHourAsleepRecord> asleepRecordsSumByGuardId) {
+	public Long resolve(Map<String, MidnightHourRecordsSumByGuard> asleepRecordsSumByGuardId) {
 		return getMostAsleepMinuteAndGuard( asleepRecordsSumByGuardId );
 	}	
 	
 	
-	public Long resolve(List<MidnightHourAsleepRecord> asleepRecords) {
-		return resolve( MidnightHourAsleepRecordsSum.buildAsleepRecordsSumByGuardId(asleepRecords) );
+	public Long resolve(List<MidnightHourRecordByGuardAndDay> asleepRecords) {
+		return resolve( MidnightHourRecordsSumByGuard.buildAsleepRecordsSumByGuardId(asleepRecords) );
 	}
 	
 	
 	@Override
 	public Long play(List<Record> listRecords) {
-		return resolve( MidnightHourAsleepRecord.buildMidnightHourAsleepRecords(listRecords) );
+		return resolve( MidnightHourRecordByGuardAndDay.buildMidnightHourAsleepRecords(listRecords) );
 	}
 }

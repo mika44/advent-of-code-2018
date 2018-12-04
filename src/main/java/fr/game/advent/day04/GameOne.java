@@ -22,11 +22,11 @@ public class GameOne extends AbstractGame<Record, Long> {
 	 * Le garde le plus assoupi.
 	 * Une simple recherche de max.
 	 */
-	private String getMostAsleepGuard(Map<String, MidnightHourAsleepRecord> asleepRecordsSumByGuardId) {
+	private String getMostAsleepGuard(Map<String, MidnightHourRecordsSumByGuard> asleepRecordsSumByGuard) {
 		Long max = -1L;
 		String guardIdMax = null;
-		for (String guardId : asleepRecordsSumByGuardId.keySet()) {
-			Long asleepMinutesCount = asleepRecordsSumByGuardId.get(guardId).getAsleepMinutesCount();
+		for (String guardId : asleepRecordsSumByGuard.keySet()) {
+			Long asleepMinutesCount = asleepRecordsSumByGuard.get(guardId).getAsleepMinutesCount();
 			if (asleepMinutesCount > max) {
 				max = asleepMinutesCount;
 				guardIdMax = guardId;
@@ -36,14 +36,14 @@ public class GameOne extends AbstractGame<Record, Long> {
 	}
 	
 	/**
-	 * A partir de l'enregistrement cumulatif (cf. méthode resolve plus bas),
+	 * A partir de la liste des enregistrements cumulatifs (cf. méthode resolve plus bas),
 	 * on cherche le garde qui est resté assoupi le plus longtemps en nombre de minutes cumulées.
 	 * Puis on cherche pour ce garde la minute où il s'est le plus souvent assoupi.
 	 * Et on retourne le produit des 2.
 	 */
-	public Long resolve(Map<String, MidnightHourAsleepRecord> asleepRecordsSumByGuardId) {
-		String guardIdMostAsleep = getMostAsleepGuard(asleepRecordsSumByGuardId);
-		int minuteMostAsleep = asleepRecordsSumByGuardId.get(guardIdMostAsleep).getMostAsleepMinute();
+	public Long resolve(Map<String, MidnightHourRecordsSumByGuard> asleepRecordsSumByGuard) {
+		String guardIdMostAsleep = getMostAsleepGuard(asleepRecordsSumByGuard);
+		int minuteMostAsleep = asleepRecordsSumByGuard.get(guardIdMostAsleep).getMostAsleepMinute();
 		return new Long(guardIdMostAsleep.substring(1)) * minuteMostAsleep;
 	}
 	
@@ -51,8 +51,8 @@ public class GameOne extends AbstractGame<Record, Long> {
 	 * Les MidnightHourAsleepRecord sont sommés pour un même garde.
 	 * On obtient un enregistrement cumulatif par minute du nombre de fois où le garde était assoupi.  
 	 */
-	public Long resolve(List<MidnightHourAsleepRecord> asleepRecords) {
-		return resolve( MidnightHourAsleepRecordsSum.buildAsleepRecordsSumByGuardId(asleepRecords) );
+	public Long resolve(List<MidnightHourRecordByGuardAndDay> asleepRecords) {
+		return resolve( MidnightHourRecordsSumByGuard.buildAsleepRecordsSumByGuardId(asleepRecords) );
 	}
 	
 	/**
@@ -62,6 +62,6 @@ public class GameOne extends AbstractGame<Record, Long> {
 	 */
 	@Override
 	public Long play(List<Record> listRecords) {
-		return resolve( MidnightHourAsleepRecord.buildMidnightHourAsleepRecords(listRecords) );
+		return resolve( MidnightHourRecordByGuardAndDay.buildMidnightHourAsleepRecords(listRecords) );
 	}
 }
