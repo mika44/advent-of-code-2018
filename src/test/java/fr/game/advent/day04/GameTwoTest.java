@@ -5,15 +5,18 @@ import org.junit.Test;
 
 public class GameTwoTest {
 	
-	private GameTwo gameSecond = new GameTwo();
+	private GameTwo gameTwo;
 
 	@Test
 	public void testExemple1() {
-		Assert.assertEquals(new Long(4455L), gameSecond.play("day04/input-day04-1-test"));
+		gameTwo = new GameTwo();
+		gameTwo.setFilename("day04/input-day04-1-test");
+		Assert.assertEquals(new Long(4455L), gameTwo.play());
 	}
 	
 	@Test
 	public void testGame() {
-		Assert.assertEquals(new Long(9763L), gameSecond.play());
+		gameTwo = new GameTwo();
+		Assert.assertEquals(new Long(9763L), gameTwo.play());
 	}
 }

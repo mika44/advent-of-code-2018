@@ -7,14 +7,14 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.game.utils.AbstractGame;
+import fr.game.utils.FileUtils;
 
 public class GameOneBis extends AbstractGame<String, Long> {
 	
 	private static final String INPUT_FILENAME = "day02/input-day02-1";
 	
-	
 	public GameOneBis() {
-		super(INPUT_FILENAME, Function.identity());
+		super(FileUtils::getListFromFile, INPUT_FILENAME, Function.identity());
 	}
 
 		

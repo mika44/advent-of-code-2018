@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import fr.game.utils.AbstractGame;
+import fr.game.utils.FileUtils;
 
 public class GameTwoBis extends AbstractGame<Integer, Integer> {
 	
 	private static final String INPUT_FILENAME = "day01/input-day01-1";
 	
 	public GameTwoBis() {
-		super(INPUT_FILENAME, Integer::new);
+		super(FileUtils::getListFromFile, INPUT_FILENAME, Integer::new);
 	}
 
 	public Integer play(List<Integer> listOfChanges) {

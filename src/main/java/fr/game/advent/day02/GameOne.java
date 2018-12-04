@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.function.Function;
 
 import fr.game.utils.AbstractGame;
+import fr.game.utils.FileUtils;
 
 public class GameOne extends AbstractGame<String, Integer> {
 	
 	private static final String INPUT_FILENAME = "day02/input-day02-1";
 	
-	
 	public GameOne() {
-		super(INPUT_FILENAME, Function.identity());
+		super(FileUtils::getListFromFile, INPUT_FILENAME, Function.identity());
 	}
 
 	

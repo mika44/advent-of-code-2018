@@ -7,15 +7,15 @@ import org.junit.Test;
 
 public class GameTwoTest {
 	
-	private GameTwo gameSecond = new GameTwo();
+	private GameTwo gameTwo = new GameTwo();
 
 	@Test
 	public void testExemple1() {
-		Assert.assertEquals("fgij", gameSecond.play(Arrays.asList("abcde", "fghij", "klmno", "pqrst", "fguij", "axcye", "wvxyz")));
+		Assert.assertEquals("fgij", gameTwo.play(Arrays.asList("abcde", "fghij", "klmno", "pqrst", "fguij", "axcye", "wvxyz")));
 	}
 
 	@Test
 	public void testGame() {
-		Assert.assertEquals("lnfqdscwjyteorambzuchrgpx", gameSecond.play());
+		Assert.assertEquals("lnfqdscwjyteorambzuchrgpx", gameTwo.play());
 	}
 }

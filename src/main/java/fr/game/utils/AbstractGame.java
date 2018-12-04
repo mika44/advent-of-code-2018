@@ -1,6 +1,7 @@
 package fr.game.utils;
 
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public abstract class AbstractGame<I, R> implements Game<I, R> {
@@ -9,24 +10,24 @@ public abstract class AbstractGame<I, R> implements Game<I, R> {
 	
 	protected String filename;
 	protected Function<String, I> mapper;
+	protected BiFunction<String, Function<String, I>, List<I>> constructorListFromFile;
 	
-	public AbstractGame(String filename, Function<String, I> mapper) {
+	public AbstractGame(BiFunction<String, Function<String, I>, List<I>> constructorListFromFile, String filename, Function<String, I> mapper) {
+		this.constructorListFromFile = constructorListFromFile;
 		this.filename = filename;
 		this.mapper = mapper;
 	}
 	
-	/* (non-Javadoc)
-	 * @see fr.game.utils.Game#play(java.util.List)
-	 */
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
 	@Override
 	public abstract R play(List<I> listOfInputs);
 	
-	/* (non-Javadoc)
-	 * @see fr.game.utils.Game#play()
-	 */
 	@Override
 	public R play() {
-		return play( FileUtils.getListFromFile(BASE_DIRECTORY + filename, mapper) );
+		return play( constructorListFromFile.apply(BASE_DIRECTORY + filename, mapper) );
 	}
 
 }

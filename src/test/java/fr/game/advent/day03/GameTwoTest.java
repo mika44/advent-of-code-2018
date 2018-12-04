@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class GameTwoTest {
 	
-	private GameTwo gameSecond = new GameTwo();
+	private GameTwo gameTwo = new GameTwo();
 
 	@Test
 	public void testExemple1() {
-		Assert.assertEquals("#3", gameSecond.play(Arrays.asList(
+		Assert.assertEquals("#3", gameTwo.play(Arrays.asList(
 																	Claim.fromString("#1 @ 1,3: 4x4"), 
 																	Claim.fromString("#2 @ 3,1: 4x4"), 
 																	Claim.fromString("#3 @ 5,5: 2x2"))));
@@ -19,6 +19,6 @@ public class GameTwoTest {
 	
 	@Test
 	public void testGame() {
-		Assert.assertEquals("#909", gameSecond.play());
+		Assert.assertEquals("#909", gameTwo.play());
 	}
 }
