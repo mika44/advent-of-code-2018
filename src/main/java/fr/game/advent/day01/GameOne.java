@@ -4,11 +4,11 @@ import java.util.List;
 
 import fr.game.utils.AbstractGame;
 
-public class GameFirst extends AbstractGame<Integer, Integer> {
+public class GameOne extends AbstractGame<Integer, Integer> {
 	
 	private static final String INPUT_FILENAME = "day01/input-day01-1";
 	
-	public GameFirst() {
+	public GameOne() {
 		super(INPUT_FILENAME, Integer::new);
 	}
 
@@ -17,9 +17,4 @@ public class GameFirst extends AbstractGame<Integer, Integer> {
 				.reduce(0, (a,b) -> a+b);
 	}
 	
-	public static void main(String[] args) {
-		GameFirst gameFirst = new GameFirst();
-		System.out.println("Résultat : " + gameFirst.play());
-	}
-
 }

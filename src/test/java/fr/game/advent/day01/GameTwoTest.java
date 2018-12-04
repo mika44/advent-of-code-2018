@@ -5,9 +5,9 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GameSecondTest {
+public class GameTwoTest {
 	
-	private GameSecond gameSecond = new GameSecond();
+	private GameTwo gameSecond = new GameTwo();
 
 	@Test
 	public void testExemple1() {
@@ -33,5 +33,10 @@ public class GameSecondTest {
 	public void testExemple5() {
 		Assert.assertEquals(new Integer(14), gameSecond.play(Arrays.asList(+7, +7, -2, -7, -4)));
 	}
-
+	
+	@Test
+	public void testGame() {
+		Assert.assertEquals(new Integer(137041), gameSecond.play());
+	}
+	
 }

@@ -5,11 +5,11 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-import fr.game.advent.day01.trial.GameSecondBis;
+import fr.game.advent.day01.trial.GameTwoBis;
 
-public class GameSecondBisTest {
+public class GameTwoBisTest {
 	
-	private GameSecondBis gameSecond = new GameSecondBis();
+	private GameTwoBis gameSecond = new GameTwoBis();
 
 	@Test
 	public void testExemple1() {
@@ -36,4 +36,9 @@ public class GameSecondBisTest {
 		Assert.assertEquals(new Integer(14), gameSecond.play(Arrays.asList(+7, +7, -2, -7, -4)));
 	}
 
+	@Test
+	public void testGame() {
+		Assert.assertEquals(new Integer(137041), gameSecond.play());
+	}
+	
 }

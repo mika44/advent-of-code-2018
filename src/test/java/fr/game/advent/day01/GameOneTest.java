@@ -5,12 +5,18 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GameFirstTest {
+public class GameOneTest {
 	
-	private GameFirst gameFirst = new GameFirst();
+	private GameOne gameFirst = new GameOne();
 
 	@Test
 	public void testExemple1() {
 		Assert.assertEquals(new Integer(3), gameFirst.play(Arrays.asList(1, -2, 3, 1)));
 	}
+	
+	@Test
+	public void testGame() {
+		Assert.assertEquals(new Integer(474), gameFirst.play());
+	}
+
 }

@@ -7,11 +7,11 @@ import java.util.Set;
 
 import fr.game.utils.AbstractGame;
 
-public class GameSecond extends AbstractGame<Integer, Integer> {
+public class GameTwo extends AbstractGame<Integer, Integer> {
 	
 	private static final String INPUT_FILENAME = "day01/input-day01-1";
 	
-	public GameSecond() {
+	public GameTwo() {
 		super(INPUT_FILENAME, Integer::new);
 	}
 
@@ -43,10 +43,4 @@ public class GameSecond extends AbstractGame<Integer, Integer> {
 		return currentFrequency; // retourner la fréquence qui a été détectée en doublon
 	}
 	
-	
-	public static void main(String[] args) {
-		GameSecond gameFirst = new GameSecond();
-		System.out.println("Résultat : " + gameFirst.play());
-	}
-
 }

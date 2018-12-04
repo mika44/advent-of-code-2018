@@ -6,11 +6,11 @@ import java.util.stream.Stream;
 
 import fr.game.utils.AbstractGame;
 
-public class GameSecondBis extends AbstractGame<Integer, Integer> {
+public class GameTwoBis extends AbstractGame<Integer, Integer> {
 	
 	private static final String INPUT_FILENAME = "day01/input-day01-1";
 	
-	public GameSecondBis() {
+	public GameTwoBis() {
 		super(INPUT_FILENAME, Integer::new);
 	}
 
@@ -35,10 +35,5 @@ public class GameSecondBis extends AbstractGame<Integer, Integer> {
 			
 			.getCurrentFrequency();
 		 
-	}
-	
-	public static void main(String[] args) {
-		GameSecondBis gameFirst = new GameSecondBis();
-		System.out.println("Résultat : " + gameFirst.play());
 	}
 }

@@ -7,12 +7,12 @@ import java.util.function.Function;
 
 import fr.game.utils.AbstractGame;
 
-public class GameFirst extends AbstractGame<String, Integer> {
+public class GameOne extends AbstractGame<String, Integer> {
 	
 	private static final String INPUT_FILENAME = "day02/input-day02-1";
 	
 	
-	public GameFirst() {
+	public GameOne() {
 		super(INPUT_FILENAME, Function.identity());
 	}
 
@@ -40,11 +40,4 @@ public class GameFirst extends AbstractGame<String, Integer> {
 		}
 		return numberOfIdContainingExactlyTwoOfAnyLetter * numberOfIdContainingExactlyThreeOfAnyLetter;
 	}
-	
-	
-	public static void main(String[] args) {
-		GameFirst gameFirst = new GameFirst();
-		System.out.println("Résultat : " + gameFirst.play());
-	}
-
 }
