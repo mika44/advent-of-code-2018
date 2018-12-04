@@ -31,13 +31,16 @@ public class GameTwo extends AbstractGame<Record, Long> {
 		return new Long(guardIdMax.substring(1)) * minuteMax;
 	}
 	
+	
 	public Long resolve(Map<String, MidnightHourAsleepRecord> asleepRecordsSumByGuardId) {
 		return getMostAsleepMinuteAndGuard( asleepRecordsSumByGuardId );
 	}	
 	
+	
 	public Long resolve(List<MidnightHourAsleepRecord> asleepRecords) {
 		return resolve( MidnightHourAsleepRecordsSum.buildAsleepRecordsSumByGuardId(asleepRecords) );
 	}
+	
 	
 	@Override
 	public Long play(List<Record> listRecords) {
