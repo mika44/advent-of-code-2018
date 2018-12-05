@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.core.io.ClassPathResource;
 
@@ -49,17 +48,5 @@ public class FileUtils {
 			return new ArrayList<>();
 		}
 	}	
-	
-	public static <T> List<T> getListFromOneLineFile(String filename, Function<String, Stream<T>> mapper) {
-		try {
-			return Files.lines(Paths.get(new ClassPathResource(filename).getURI()))
-			    .flatMap(mapper)
-				.collect(Collectors.toList());
-		} catch (IOException e) {
-			e.printStackTrace();
-			return new ArrayList<>();
-		}
-	}	
-
 }
 
