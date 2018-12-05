@@ -3,6 +3,7 @@ package fr.game.advent.day05;
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class GameOneTest {
@@ -16,6 +17,7 @@ public class GameOneTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGame() {
 		gameOne = new GameOne();
 		Assert.assertEquals(new Integer(9370), gameOne.play());

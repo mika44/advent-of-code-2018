@@ -3,23 +3,21 @@ package fr.game.advent.day05;
 import java.util.Arrays;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class GameTwoTest {
+public class GameYMLGTest {
 	
-	private GameTwo gameTwo;
+	private GameYMLG gameTwo;
 
 	@Test
 	public void testExemple1() {
-		gameTwo = new GameTwo();
+		gameTwo = new GameYMLG();
 		Assert.assertEquals(new Integer(4), gameTwo.play(Arrays.asList("dabAcCaCBAcCcaDA")));
 	}
 	
 	@Test
-	@Ignore
 	public void testGame() {
-		gameTwo = new GameTwo();
+		gameTwo = new GameYMLG();
 		Assert.assertEquals(new Integer(6390), gameTwo.play());
 	}
 }
