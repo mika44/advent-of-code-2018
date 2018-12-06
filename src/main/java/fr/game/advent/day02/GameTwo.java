@@ -19,7 +19,7 @@ public class GameTwo extends AbstractGame<String, String> {
 	
 	/**
 	 * Compte le nombre de caractère différents entre 2 chaînes.
-	 * S'arrête dès qu'on dépasse 1 différence (puisqu'on teste s'il y a une différence de seulement et exactement 1 caractère.
+	 * S'arrête dès qu'on dépasse 1 différence (puisqu'on teste s'il y a une différence de seulement et exactement 1 caractère).
 	 */
 	private boolean differByExactlyOneCharacter(String id1, String id2) {
 		int distance = 0;
@@ -36,7 +36,7 @@ public class GameTwo extends AbstractGame<String, String> {
 	}
 
 	/**
-	 * Construite la chaîne des caractères communs à 2 chaînes.
+	 * Construit la chaîne des caractères communs à 2 chaînes.
 	 */
 	private String sharedLetters(String id1, String id2) {
 		StringBuilder sharedLettersBuilder = new StringBuilder();

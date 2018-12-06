@@ -17,6 +17,6 @@ public class GameOneTest {
 	@Test
 	public void testGame() {
 		gameOne = new GameOne();
-		Assert.assertEquals(new Long(9370L), gameOne.play());
+		Assert.assertEquals(new Long(4166L), gameOne.play());
 	}
 }
