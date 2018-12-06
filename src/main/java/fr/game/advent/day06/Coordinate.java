@@ -61,4 +61,10 @@ public class Coordinate {
 		String[] coordinateStringSplitted = coordinateString.split(",");
 		return new Coordinate(new Integer(coordinateStringSplitted[0].trim()), new Integer(coordinateStringSplitted[1].trim()));
 	}
+	
+	public Integer distance(Coordinate other) {
+		return Math.abs(this.getX() - other.getX()) + Math.abs(this.getY() - other.getY());
+	}
+	
+
 }
