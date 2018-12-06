@@ -53,7 +53,7 @@ public class GameTwoBis extends AbstractGame<String, Integer> {
 			Deque<Character> polymerSansUnit = generatePolymerByRemovingAllUnitOccurrence(polymerInitial, unit);
 			// On lance la réduction sur ce nouveau "polymer"
 			Integer reduction = reduce(polymerSansUnit).size();
-			System.out.println("Reduction du polymer par l'unit " + unit + " - Resultat " + reduction);
+			//System.out.println("Reduction du polymer par l'unit " + unit + " - Resultat " + reduction);
 			if (reduction < minReduction) {
 				minReduction = reduction;
 			}
