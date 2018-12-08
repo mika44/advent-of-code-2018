@@ -1,11 +1,11 @@
 package fr.game.advent.day07;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.game.utils.AbstractGame;
@@ -19,69 +19,37 @@ public class GameOne extends AbstractGame<Step, String> {
 		super(FileUtils::getListFromFile, INPUT_FILENAME, Step::fromString);
 	}
 
-	private Map<Character, Node> graph;
-	
-	private void addPredecessorsAndSuccessors(Node node, List<Step> listOfSteps) {
-		node.setSuccessors( listOfSteps.parallelStream()
-								.filter(s -> s.getPredecessor().equals(node.getNode()))
-								.map(Step::getSuccessor)
-								.map(graph::get)
-								.collect(Collectors.toSet()));
-		
-		node.setPredecessors( listOfSteps.parallelStream()
-								.filter(s -> s.getSuccessor().equals(node.getNode()))
-								.map(Step::getPredecessor)
-								.map(graph::get)
-								.collect(Collectors.toSet()));
-	}
-	
-	private void createGraph(List<Step> listOfSteps) {
-		graph = listOfSteps.stream()
-					.flatMap(Step::getStep)
-					.distinct()
-					.map(Node::new)
-					.collect(Collectors.toMap(Node::getNode, Function.identity()));
-		
-		graph.values().parallelStream()
-			.forEach(n -> addPredecessorsAndSuccessors(n, listOfSteps));
-	}
-	
-
-	private void getCompletionWay(Node current, List<Node> way, SortedSet<Node> potentialSuccessors) {
-		if (current != null) {
-			for (Node node : current.getSuccessors()) {
-				if (way.containsAll(node.getPredecessors())) potentialSuccessors.add(node);
-			}
+	private List<Node> getCompletionWay(Node currentNode, Set<Node> alreadyTreatedNodes, SortedSet<Node> potentialSuccessors) {
+		if (currentNode != null) {
+			currentNode.getSuccessors().stream()
+				.filter(n -> !alreadyTreatedNodes.contains(n))
+				.filter(n -> alreadyTreatedNodes.containsAll(n.getPredecessors()))
+				.forEach(n -> potentialSuccessors.add(n));
 		}
-		while (!potentialSuccessors.isEmpty()) {
-			Node node = potentialSuccessors.first();
-			if (!way.contains(node)) {
-				way.add(node);;
-				potentialSuccessors.remove(node);
-				getCompletionWay(node, way, potentialSuccessors);
-			}
+		
+		List<Node> way = new ArrayList<>();		
+		if (!potentialSuccessors.isEmpty()) {
+			Node nextNode = potentialSuccessors.first();
+			way.add(nextNode);
+			alreadyTreatedNodes.add(nextNode);
+			potentialSuccessors.remove(nextNode);
+			way.addAll( getCompletionWay(nextNode, alreadyTreatedNodes, potentialSuccessors) );
 		}
+		
+		return way;
 	}
 	
-	private String getCompletionWay() {
-		SortedSet<Node> heads = new TreeSet<>( graph.values().parallelStream()	
-												.filter(Node::isHead)
-												.collect(Collectors.toSet()));
-					
-		List<Node> way = new LinkedList<>();
-		
-		getCompletionWay(null, way, heads);
-		
+	private String getCompletionWay(Graph graph) {
+		List<Node> way = getCompletionWay(null, new HashSet<>(), new TreeSet<>(graph.heads()));
 		return way.stream()	
-			.map(Node::getNode)
-			.map(c -> "" + c)
-			.collect(Collectors.joining());
+				.map(Node::getNodeName)
+				.collect(Collectors.joining());
 	}
 
 	@Override
 	public String play(List<Step> listOfSteps) {
-		createGraph(listOfSteps);
-		return getCompletionWay();
+		Graph graph = Graph.createGraph(listOfSteps);
+		return getCompletionWay(graph);
 	}
 
 }

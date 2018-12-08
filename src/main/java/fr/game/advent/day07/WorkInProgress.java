@@ -5,7 +5,6 @@ public class WorkInProgress {
 	private Integer timeLeft;
 
 	public WorkInProgress(Node node, Integer timeLeft) {
-		super();
 		this.node = node;
 		this.timeLeft = timeLeft;
 	}
@@ -20,7 +19,14 @@ public class WorkInProgress {
 
 	@Override
 	public String toString() {
-		return String.format("WorkInProgress [node=%s, timeLeft=%s]", node, timeLeft);
+		return String.format("[node=%s, timeLeft=%s]", node == null ? "." : node.getNode(), timeLeft);
+	}
+
+	public Boolean isInactive() {
+		return node == null && timeLeft == 0;
 	}
 	
+	public static WorkInProgress getInactive() {
+		return new WorkInProgress(null, 0);
+	}
 }

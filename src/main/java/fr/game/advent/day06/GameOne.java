@@ -58,7 +58,7 @@ public class GameOne extends AbstractGame<Coordinate, Long> {
 	
 	// Tout coordinate qui possède un point dans sa zone d'influence situé hors de l'aire 
 	// comprise entre les min et max des coordonnées de tous les coordinates
-	// a une zone d'influence infine (démontrable).
+	// a une zone d'influence infinie (démontrable).
 	private void calculateCoordonatesWithInfiniteAeras() {
 		coordinatesWithInfiniteArea = areas.entrySet().parallelStream()
 										.filter(p -> isOutOfMinMaxArea(p.getKey()))
@@ -87,9 +87,7 @@ public class GameOne extends AbstractGame<Coordinate, Long> {
 			.filter(c -> c != null)
 			.filter(c -> !coordinatesWithInfiniteArea.contains(c))
 			.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-			.entrySet().stream()
-			.peek(System.out::println)
-			.map(Entry::getValue)
+			.values().stream()
 			.max(Comparator.naturalOrder())
 			.get();
 	}

@@ -1,15 +1,9 @@
 package fr.game.advent.day07;
 
 import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import fr.game.utils.AbstractGame;
 import fr.game.utils.FileUtils;
@@ -34,102 +28,70 @@ public class GameTwo extends AbstractGame<Step, Integer> {
 		this.numberOfWorkers = numberOfWorkers;
 	}
 
-
-	private Map<Character, Node> graph;
 	
-	private void addPredecessorsAndSuccessors(Node node, List<Step> listOfSteps) {
-		node.setSuccessors( listOfSteps.parallelStream()
-								.filter(s -> s.getPredecessor().equals(node.getNode()))
-								.map(Step::getSuccessor)
-								.map(graph::get)
-								.collect(Collectors.toSet()));
-		
-		node.setPredecessors( listOfSteps.parallelStream()
-								.filter(s -> s.getSuccessor().equals(node.getNode()))
-								.map(Step::getPredecessor)
-								.map(graph::get)
-								.collect(Collectors.toSet()));
-	}
-	
-	private void createGraph(List<Step> listOfSteps) {
-		graph = listOfSteps.stream()
-					.flatMap(Step::getStep)
-					.distinct()
-					.map(Node::new)
-					.collect(Collectors.toMap(Node::getNode, Function.identity()));
-		
-		graph.values().parallelStream()
-			.forEach(n -> addPredecessorsAndSuccessors(n, listOfSteps));
-	}
-	
-
-	private void getCompletionWay(Integer second, List<Node> alreadyTreatedNodes, List<Node> finishedTreatedNodes, SortedSet<Node> availableNodes, Deque<ChronoStep> chronoSteps) {
-			second++;
-			ChronoStep currentChronoStep = new ChronoStep(second);
-			
-			ChronoStep lastChronoStep = chronoSteps.peekLast();
-			if (lastChronoStep == null) {
-				lastChronoStep = new ChronoStep(-1);
-				lastChronoStep.setWorksInProgress( Stream.iterate(0, i -> i+1).limit(numberOfWorkers)
-						                           .map(i -> new WorkInProgress(null, 0))
-						                           .collect(Collectors.toList()) );
-			}
-			
-			for (WorkInProgress wip : lastChronoStep.getWorksInProgress()) {
-				if (wip.getTimeLeft() == 0 && wip.getNode() != null) {
-					finishedTreatedNodes.add(wip.getNode());
-					for (Node node : wip.getNode().getSuccessors()) {
-						if (finishedTreatedNodes.containsAll(node.getPredecessors()) && !alreadyTreatedNodes.contains(node)) availableNodes.add(node);
-					}
+	private void updateTreatedAndAvailableNodes(ChronoStep lastChronoStep, List<Node> alreadyTreatedNodes, List<Node> finishedTreatedNodes, SortedSet<Node> availableNodes) {
+		for (WorkInProgress wip : lastChronoStep.getWorksInProgress()) {
+			if (wip.getTimeLeft() == 0 && wip.getNode() != null) {
+				finishedTreatedNodes.add(wip.getNode());
+				for (Node node : wip.getNode().getSuccessors()) {
+					if (finishedTreatedNodes.containsAll(node.getPredecessors()) && !alreadyTreatedNodes.contains(node)) availableNodes.add(node);
 				}
 			}
-			
-			List<WorkInProgress> currentWorkInProgress = new ArrayList<>();
-			boolean isFinished = true;
-			for (WorkInProgress wip : lastChronoStep.getWorksInProgress()) {
-				if (wip.getTimeLeft() == 0) {
-					if (availableNodes.isEmpty()) {
-						currentWorkInProgress.add(new WorkInProgress(null, 0));
-					} else {
-						isFinished = false;
-						Node node = availableNodes.first();
-						alreadyTreatedNodes.add(node);
-						availableNodes.remove(node);
-						currentWorkInProgress.add(new WorkInProgress(node, node.getNode().charValue() - 'A' + stepDurationBase));
-					}
+		}
+	}
+
+	
+	private List<WorkInProgress> calculateCurrentWorksInProgress(ChronoStep lastChronoStep, List<Node> alreadyTreatedNodes, SortedSet<Node> availableNodes) {
+		List<WorkInProgress> currentWorkInProgress = new ArrayList<>();
+		for (WorkInProgress wip : lastChronoStep.getWorksInProgress()) {
+			if (wip.getTimeLeft() == 0) {
+				if (availableNodes.isEmpty()) {
+					currentWorkInProgress.add( WorkInProgress.getInactive() );
 				} else {
-					isFinished = false;
-					currentWorkInProgress.add(new WorkInProgress(wip.getNode(), wip.getTimeLeft() - 1));					
+					Node node = availableNodes.first();
+					alreadyTreatedNodes.add(node);
+					availableNodes.remove(node);
+					currentWorkInProgress.add( new WorkInProgress(node, node.timeToWork(stepDurationBase)) );
 				}
+			} else {
+				currentWorkInProgress.add( new WorkInProgress(wip.getNode(), wip.getTimeLeft() - 1) );					
 			}
-		
-			
-			if (!isFinished) {
-				currentChronoStep.setWorksInProgress(currentWorkInProgress);
-				chronoSteps.addLast(currentChronoStep);
-				System.out.println(currentChronoStep);
-				getCompletionWay(second, alreadyTreatedNodes, finishedTreatedNodes, availableNodes, chronoSteps);
-			}
-			
+		}
+		return currentWorkInProgress;
 	}
+
 	
+	private List<ChronoStep> getChronograph(ChronoStep lastChronoStep, List<Node> alreadyTreatedNodes, List<Node> finishedTreatedNodes, SortedSet<Node> availableNodes) {
+		updateTreatedAndAvailableNodes(lastChronoStep, alreadyTreatedNodes, finishedTreatedNodes, availableNodes);
+		
+		ChronoStep currentChronoStep = new ChronoStep(lastChronoStep.getSecondTime() + 1);
+		currentChronoStep.setWorksInProgress( calculateCurrentWorksInProgress(lastChronoStep, alreadyTreatedNodes, availableNodes) );
+		
+		List<ChronoStep> chronograph = new ArrayList<>();
+		if (!currentChronoStep.isTerminate()) {
+			chronograph.add(currentChronoStep);
+			System.out.println(currentChronoStep);
+			chronograph.addAll( getChronograph(currentChronoStep, alreadyTreatedNodes, finishedTreatedNodes, availableNodes) );
+		}
+		
+		return chronograph;
+	}
+
 	
-	private Integer getCompletionWay() {
-		SortedSet<Node> heads = new TreeSet<>( graph.values().parallelStream()	
-												.filter(Node::isHead)
-												.collect(Collectors.toSet()));
-		
-		Deque<ChronoStep> chronoSteps = new LinkedList<>(); 
-		getCompletionWay(-1, new ArrayList<>(), new ArrayList<>(), heads, chronoSteps);
-		
+	private Integer getChronographSize(Graph graph) {
+		List<ChronoStep> chronoSteps = getChronograph(ChronoStep.getInitialChronoStep(numberOfWorkers), 
+													  new ArrayList<>(), 
+													  new ArrayList<>(), 
+													  new TreeSet<>(graph.heads())
+													  );
 		return chronoSteps.size();
 	}
 
 	
 	@Override
 	public Integer play(List<Step> listOfSteps) {
-		createGraph(listOfSteps);
-		return getCompletionWay();
+		Graph graph = Graph.createGraph(listOfSteps);
+		return getChronographSize(graph);
 	}
 
 }

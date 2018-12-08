@@ -38,6 +38,7 @@ public class StudiedZone<R> {
 	private void calculateAreas(List<Coordinate> listOfCoordinate, BiFunction<Coordinate, List<Coordinate>, R> calculateArea) {
 		areas = Stream.iterate(minX - 1, x -> x + 1).limit(maxX - minX + 2)
 					.flatMap(this::streamOfCoordinate)
+					.parallel()
 					.filter(point -> calculateArea.apply(point, listOfCoordinate) != null)
 					.collect(Collectors.toMap(Function.identity(), point -> calculateArea.apply(point, listOfCoordinate) ));
 	}

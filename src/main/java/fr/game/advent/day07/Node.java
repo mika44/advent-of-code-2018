@@ -32,24 +32,9 @@ public class Node implements Comparable<Node> {
 	public void setPredecessors(Set<Node> predecessors) {
 		this.predecessors = new TreeSet<>(predecessors);
 	}
-	
-	
+		
 	public Character getNode() {
 		return node;
-	}
-
-	public boolean isHead() {
-		return predecessors.isEmpty();
-	}
-	
-	public Set<Node> addSuccessor(Node successor) {
-		successors.add(successor);
-		return successors; 
-	}
-	
-	public Set<Node> addPredecessor(Node predecessor) {
-		predecessors.add(predecessor);
-		return predecessors; 
 	}
 	
 	@Override
@@ -91,4 +76,16 @@ public class Node implements Comparable<Node> {
 		return Comparator.comparing(Node::getNode).compare(this, o);
 	}
 
+	
+	public String getNodeName() {
+		return Character.toString(node);
+	}
+
+	public Integer timeToWork(Integer stepDurationBase) {
+		return node.charValue() - 'A' + stepDurationBase;
+	}
+
+	public boolean isHead() {
+		return predecessors.isEmpty();
+	}
 }

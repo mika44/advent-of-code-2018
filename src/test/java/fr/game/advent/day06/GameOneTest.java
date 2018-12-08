@@ -1,6 +1,7 @@
 package fr.game.advent.day06;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class GameOneTest {
@@ -15,6 +16,8 @@ public class GameOneTest {
 	}
 	
 	@Test
+	@Ignore
+	// Solution bis plus efficace
 	public void testGame() {
 		gameOne = new GameOne();
 		Assert.assertEquals(new Long(4166L), gameOne.play());
