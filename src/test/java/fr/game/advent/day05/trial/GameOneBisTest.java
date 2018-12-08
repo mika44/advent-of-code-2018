@@ -1,9 +1,11 @@
-package fr.game.advent.day05;
+package fr.game.advent.day05.trial;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import fr.game.advent.day05.trial.GameOneBis;
 
 public class GameOneBisTest {
 	

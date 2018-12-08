@@ -1,4 +1,4 @@
-package fr.game.advent.day05;
+package fr.game.advent.day05.trial;
 
 import java.util.Comparator;
 import java.util.List;
