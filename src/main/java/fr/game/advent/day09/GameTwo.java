@@ -34,35 +34,35 @@ public class GameTwo extends AbstractGame<String, Long> {
 
 	
 	
-	private Node createCircle() {
-		Node currentPointOnCircle = new Node(0);
+	private PointOnCircle createCircle() {
+		PointOnCircle currentPointOnCircle = new PointOnCircle(0);
 		currentPointOnCircle.setPredecessor(currentPointOnCircle);
 		currentPointOnCircle.setSuccessor(currentPointOnCircle);
 		return currentPointOnCircle;
 	}
 	
-	private Node addPointOnCircleAfterCurrentPoint(Node currentPointOnCircle, Integer value) {
-		Node newPointOnCircle = new Node(value, currentPointOnCircle, currentPointOnCircle.getSuccessor());
+	private PointOnCircle addPointOnCircleAfterCurrentPoint(PointOnCircle currentPointOnCircle, Integer value) {
+		PointOnCircle newPointOnCircle = new PointOnCircle(value, currentPointOnCircle, currentPointOnCircle.getSuccessor());
 		currentPointOnCircle.getSuccessor().setPredecessor(newPointOnCircle);
 		currentPointOnCircle.setSuccessor(newPointOnCircle);
 		return newPointOnCircle;
 	}
 
-	private Node removeCurrentPointOnCircleAndReturnNewCurrentPoint(Node currentPointOnCircle) {
+	private PointOnCircle removeCurrentPointOnCircleAndReturnNewCurrentPoint(PointOnCircle currentPointOnCircle) {
 		currentPointOnCircle.getSuccessor().setPredecessor(currentPointOnCircle.getPredecessor());
 		currentPointOnCircle.getPredecessor().setSuccessor(currentPointOnCircle.getSuccessor());
 		currentPointOnCircle = currentPointOnCircle.getSuccessor();
 		return currentPointOnCircle;
 	}
 
-	private Node moveCounterClockwiseOnCircle(Node currentPointOnCircle, int numberOfMoves) {
+	private PointOnCircle moveCounterClockwiseOnCircle(PointOnCircle currentPointOnCircle, int numberOfMoves) {
 		for (int i = 0; i < numberOfMoves; i++) {
 			currentPointOnCircle = currentPointOnCircle.getPredecessor();
 		}
 		return currentPointOnCircle;
 	}
 
-	private Node moveClockwiseOnCircle(Node currentPointOnCircle, int numberOfMoves) {
+	private PointOnCircle moveClockwiseOnCircle(PointOnCircle currentPointOnCircle, int numberOfMoves) {
 		for (int i = 0; i < numberOfMoves; i++) {
 			currentPointOnCircle = currentPointOnCircle.getSuccessor();
 		}
@@ -74,7 +74,7 @@ public class GameTwo extends AbstractGame<String, Long> {
 	private List<Long> getPlayerScores() {
 		List<Long> playerScores = Stream.iterate(0, i->i+1).limit(numberOfPlayers).map(i->0L).collect(Collectors.toList());
 		
-		Node currentPointOnCircle = createCircle();
+		PointOnCircle currentPointOnCircle = createCircle();
 		Integer player = -1;
 		Integer lastMarbleNumberUsed = 0;
 		
